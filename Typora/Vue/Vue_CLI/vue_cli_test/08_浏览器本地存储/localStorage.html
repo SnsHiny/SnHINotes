@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>localStorage</title>
+</head>
+<body>
+    <h1>localStorage</h1>
+    <button onclick="saveDate()">点我在本地存储中保存数据</button>
+    <button onclick="getDate()">点我在本地存储中获取数据</button>
+    <button onclick="deleteDate()">点我在本地存储中删除数据</button>
+    <button onclick="clearDate()">点我在本地存储中清空数据</button>
+</body>
+
+<script>
+    function saveDate() {
+        localStorage.setItem("msg1", "SnHI")
+    }
+
+    function getDate() {
+        console.log(localStorage.getItem("msg1"));
+    }
+
+    function deleteDate() {
+        localStorage.removeItem("msg1")
+    }
+
+    function clearDate() {
+        localStorage.clear()
+    }
+</script>
+</html>

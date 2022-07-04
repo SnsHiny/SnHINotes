@@ -1,0 +1,4 @@
+Hello Linux
+Hello Windows
+bye Windows
+bye Linux

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!--
+        - Vue会监视data中所有层次的数据
+        - 对象监测方式：通过setter实现检测，且要在new Vue时就要传入要检测的数据，对象后追加的属性，Vue默认不做响应式处理，如需给后添加的属性做响应式，使用如下API：
+            - Vue.set(target, propertyName/index, value)
+            - vm.$set(target, propertyName/index, value
+            [^注意]: Vue.set() 和 vm.$set不能给 vm 或 vm 中的根数据对象添加属性
+        - 数组监测方式：通过包裹数组更新元素的方法实现，首先调用原生对应的方法对数组进行更新，然后重新解析模板，进而更新页面
+            - 使用API：push()、pop()、shift()、unshift()、splice()、sort()、reverse()
+            - Vue.set() 或 vm.$set()
+    -->
+    <div id="root">
+        <h1>添加属性</h1>
+        <button @click="addAttr">添加一个年龄属性</button>
+        <button @click.once="addFriend">添加一个朋友</button>
+        <h2>学生信息</h2>
+        <h3>姓名：{{student.name}}</h3>
+        <h3>性别：{{student.sex}}</h3>
+        <h3 v-if="student.age">年龄：{{student.age}}</h3>
+        <h3>朋友</h3>
+        <ul>
+            <li v-for="(f, index) in student.friends" :key="index">
+                {{f.name}}-{{f.sex}}-{{f.age}}
+            </li>
+        </ul>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+                                   
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                student: {
+                    name: "jack",
+                    sex: "男",
+                    friends: [
+                        {name: "tom", sex: "男", age: 20},
+                        {name: "jerry", sex: "女", age: 22},
+                    ]
+                }
+            },
+            methods: {
+                addAttr() {
+                    // Vue.set(this.student, "age", 18)
+                    vm.$set(this.student, "age", 18)
+                },
+                addFriend() {
+                    this.student.friends.push({name: "lisa", sex: "女", age: 20})
+                }  
+            }
+        })
+    </script>
+</body>
+</html>

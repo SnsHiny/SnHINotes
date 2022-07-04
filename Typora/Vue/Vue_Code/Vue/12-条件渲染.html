@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+    <!--
+        - v-if / v-else-if / v-else
+            - 适用于切换频率较低的场景
+            - 特点：不展示的DOM元素直接被移除
+            - v-if和v-else-if和v-else一起使用，但要求结构不能被打断
+        - v-show
+            - 适用于切换频率较高的场景
+            - 特点：不展示的DOM元素未被移除，仅仅是使用样式隐藏掉
+        - 使用v-if时，元素可能无法获取到，而使用v-show则一定可以获取到
+    -->
+
+    <div id="root">
+        <!-- 使用v-show进行条件渲染 -->
+        <div v-show="false">你好，{{name}}</div>
+        <!-- 使用v-if进行条件渲染 -->
+        <button @click="n++">点我n+1</button>
+        <div v-if="n == 1">你好1，{{n}}</div>
+        <div v-else-if="n == 2">你好2，{{n}}</div>
+        <div v-else-if="n == 3">你好3，{{n}}</div>
+        <div v-else>你好4，{{n}}</div>
+
+        <!-- v-if和template的配合使用（template模板，不影响结构） -->
+        <template v-if="n == 1">
+            <h2>1</h2>
+            <h2>2</h2>
+            <h2>3</h2>
+        </template>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+                                   
+        new Vue({
+            el: '#root',
+            data: {
+               name: "SnHI",
+               n: 0 
+            },
+            methods: {
+                      
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+         
+    <!--数据代理：通过一个对象管理另一个对象的内部属性-->
+    <script type="text/javascript">
+        let obj1 = {x: 100}
+        let obj2 = {y: 200}
+
+        //Object.defineProperty()：obj2的x1属性进行操作，没有则新增该属性
+        Object.defineProperty(obj2, 'x1', {
+            get() {
+                return obj1.x
+            },
+            set(value) {
+                obj1.x = value
+            }
+        })
+    </script>
+
+    <!-- Vue中的数据代理 -->
+    <!--
+        - 通过vm对象来代理data对象中属性的操作，更加方便的操作data中的数据
+        - 原理
+            - 通过Object.defineProperty()把data对象中所有的属性添加到vm上
+            - 为每一个添加到vm上的属性，都指定一个getter/setter
+            - 在getter/setter内部去操作data中对应的属性
+    -->
+    </script>
+</body>
+</html>

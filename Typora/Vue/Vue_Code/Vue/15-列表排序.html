@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>列表排序</h1>
+        <input type="text" placeholder="输入关键字搜索" v-model="keyWord">
+        <button @click="sortType = 2">降序</button>
+        <button @click="sortType = 1">升序</button>
+        <button @click="sortType = 0">原顺序</button>
+        <ul>
+            <li v-for="person in filPerson" :key="person.id">
+                {{person.name}}-{{person.sex}}-{{person.age}}
+            </li>
+        </ul>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+                                   
+        new Vue({
+            el: '#root',
+            data: {
+                keyWord: "",
+                persons: [
+                    {id: "001", name: "马冬梅", sex: "女", age: 18},
+                    {id: "002", name: "周冬雨", sex: "女", age: 19},
+                    {id: "003", name: "周杰伦", sex: "男", age: 20},
+                    {id: "004", name: "李连杰", sex: "男", age: 21}
+                ],
+                sortType: 0
+            },
+            computed: {
+                filPerson() {
+                    const arr = this.persons.filter((p)=> {
+                        return p.name.indexOf(this.keyWord) !== -1
+                    })
+                    if(this.sortType) {
+                        arr.sort((p1, p2)=> {
+                            return this.sortType === 1 ? p1.age - p2.age : p2.age - p1.age
+                        })
+                    }
+                    return arr
+                }
+            }
+        })
+    </script>
+</body>
+</html>

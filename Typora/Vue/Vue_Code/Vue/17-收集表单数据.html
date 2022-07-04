@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+    <!--
+        - text类型标签：v-model收集的是value值，用户输入的就是value值
+        - radio类型标签：v-model收集的是value值，且要给标签配置value值
+        - checkbox类型标签
+            - 没有配置input的value属性，那么收集到的是checked（勾选或未勾选，布尔值）
+            - 配置了input的value属性
+                - v-model的初始值是非数组，那么收集到的是checked
+                - v-model的初始值是数组，那么收集到的就是value组成的数组
+        - v-model的三个修饰符
+            - lazy：失去焦点再收集数据
+            - number：输入字符转为有效的数字
+            - trim：输入首位空格过滤
+    -->
+
+    <div id="root">
+        <form @submit.prevent="submit">
+            <span>账号：</span><input type="text" v-model.trim="accout"><br><br>
+            <span>密码：</span><input type="text" v-model="password"><br><br>
+            <span>性别：</span>
+            男：<input type="radio" name="sex" v-model="sex" value="男">
+            女：<input type="radio" name="sex" v-model="sex" value="女"><br><br>
+            <!-- v-model.number：保证vue.data中该属性为整数型 -->
+            年龄：<input type="number" v-model.number="age"><br><br>
+            <span>爱好：</span>
+            <!-- checkbox多选类型标签在vue.data中需要用数组接收 -->
+            跳舞<input type="checkbox" v-model="hobby" value="跳舞">
+            跑步<input type="checkbox" v-model="hobby" value="跑步">
+            唱歌<input type="checkbox" v-model="hobby" value="唱歌"><br><br>
+            <span>所属校区：</span>
+            <select v-model="school">
+                <option value="">请选择校区</option>
+                <option value="beijing">北京</option>
+                <option value="shanghai">上海</option>
+                <option value="shenzhen">深圳</option>
+                <option value="hangzhou">杭州</option>
+            </select><br><br>
+            <span>其他信息：</span>
+            <!-- v-model.lazy：使标签失去焦点时再更新vue.data -->
+            <textarea cols="30" rows="10" v-model.lazy="other"></textarea><br><br>
+            <input type="checkbox" v-model="agree"><span>阅读并接受</span><a href="#">用户协议</a><br><br>
+        <input type="submit">
+        </form>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+                                   
+        new Vue({
+            el: '#root',
+            data: {
+                accout: "",
+                password: "",
+                sex: "",
+                hobby: [],
+                school: "",
+                other: "",
+                agree: "",
+                age: ""
+            },
+            methods: {
+                submit() {
+                    // 将data中所有数据以JSON格式输出
+                    console.log(JSON.stringify(this._data));
+                }
+            },
+        })
+    </script>
+</body>
+</html>

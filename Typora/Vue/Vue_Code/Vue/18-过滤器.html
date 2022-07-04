@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <script type="text/javascript" src="../js/dayjs.min.js"></script>
+</head>
+<body>
+
+    <!--
+        - 对要显示的数据进行特定格式化后再显示（适用于一些简单逻辑的处理）
+        - 注册过滤器
+            - 全局过滤器：Vue.filter(name, callback)
+            - 局部过滤器：new Vue(filters:{})
+        - 过滤器也可以接收额外参数、多个过滤器也可以串联
+        - 过滤器不改变原本的数据，是产生新的对应的数据
+    -->
+
+    <div id="root">
+        <h1>格式化时间</h1>
+        <!-- 计算属性实现 -->
+        <h3>现在时间是{{time}}</h3>
+        <!-- methods实现 -->
+        <h3>现在时间是{{timeFormat()}}</h3>
+        <!-- 过滤器实现 -->
+        <!-- |：管道过滤器，前面可写参数，将参数带入管道过滤器后的过滤器方法，过滤器的返回值代替整个插值 -->
+        <h3>现在时间是{{| timeFormatFilter}}</h3>
+        <!-- 过滤器实现（传参） -->
+        <h3>现在时间是{{'' | timeFormatFilter('YYYY-MM-DD')}}</h3>
+        <!-- 过滤器实现（多层过滤） -->
+        <!-- 后一层过滤器过滤前一层的返回值，第一个参数不传给第二层往后的过滤器 -->
+        <h3>现在时间是{{'' | timeFormatFilter('YYYY-MM-DD') | mySlice}}</h3>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        //全局过滤器
+        Vue.filter("mySlice", function(value) {
+            return value.slice(0, 4)
+        })
+                                   
+        new Vue({
+            el: '#root',
+            data: {
+                
+            },
+            methods: {
+                timeFormat() {
+                    return dayjs().format('YYYY年MM月DD日 HH:mm:ss')
+                }   
+            },
+            computed: {
+                time() {
+                    return dayjs().format('YYYY年MM月DD日 HH:mm:ss')
+                }
+            },
+            //局部过滤器
+            filters: {
+                //value接受|管道过滤器前的参数，str接收过滤器传参的参数
+                //str='YYYY年MM月DD日 HH:mm:ss'表示当str有形参时，用形参；没有形参时，用str后的默认值
+                //return作为过滤器的返回值
+                timeFormatFilter(value, str='YYYY年MM月DD日 HH:mm:ss') {
+                    return dayjs().format(str)
+                },
+                // mySlice(value) {
+                //     //截取0到4位
+                //     return value.slice(0, 4)
+                // }
+            }
+        })
+    </script>
+</body>
+</html>

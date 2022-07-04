@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h1>列表过滤</h1>
+        <input type="text" placeholder="输入关键字搜索" v-model="keyWord">
+        <ul>
+            <!-- 用监视方式实现 -->
+            <!-- <li v-for="person in filPersons" :key="person.id">
+                {{person.name}}-{{person.sex}}-{{person.age}}
+            </li> -->
+            <!-- 用计算属性方式实现 -->
+            <li v-for="person in filPerson" :key="person.id">
+                {{person.name}}-{{person.sex}}-{{person.age}}
+            </li>
+        </ul>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+                                   
+        new Vue({
+            el: '#root',
+            data: {
+                keyWord: "",
+                persons: [
+                    {id: "001", name: "马冬梅", sex: "女", age: 18},
+                    {id: "002", name: "周冬雨", sex: "女", age: 19},
+                    {id: "003", name: "周杰伦", sex: "男", age: 20},
+                    {id: "004", name: "张杰", sex: "男", age: 21}
+                ],
+                filPersons: []
+            },
+            methods: {
+                      
+            },
+            //监视方式实现查询
+            // watch: {
+            //     keyWord: {
+            //         immediate: true,
+            //         handler(value) {
+            //             this.filPersons = this.persons.filter((p)=> {
+            //             return p.name.indexOf(value) !== -1
+            //         })
+            //         }
+            //     }
+            // },
+            //用计算属性方式实现查询
+            computed: {
+                filPerson() {
+                    return this.persons.filter((p)=> {
+                        return p.name.indexOf(this.keyWord) !== -1
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

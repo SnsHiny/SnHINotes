@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <!-- v-text：向其所在的节点渲染文本内容。与插值语法的区别：v-text会替换节点中的所有内容，{{xxx}}不会 -->
+        <div v-text="name1"></div>
+        <!-- v-html：与v-text功能一样，但其可以解析html结构（有xss攻击等安全性问题） -->
+        <div v-html="name2"></div>
+        <!-- v-cloak（没有值）:本质是一个特殊属性，Vue实例创建并接管容器后，会删除v-cloak，配合css（display:none）使用可以解决网速慢时页面出现{{xxx}}的问题 -->
+        <div v-cloak>{{name3}}</div>
+        <!-- v-once（没有值）：其所在的节点在初次动态更新后，就视为静态数据了，以后数据的改变就不会影响v-once所在节点的值，可用于优化性能 -->
+        <div v-once>n初始值：{{n}}</div>
+        <div >n现值：{{n}}</div>
+        <button @click="n++">点我n+1</button>
+        <!-- v-pre（没有值）：跳过其所在节点的编译过程。可跳过没有使用指令语法、插值语法的节点，加快编译 -->
+        <div v-pre>SnHI</div>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+                                   
+        new Vue({
+            el: '#root',
+            data: {
+                name1: "SnHI1",
+                name2: "<h1>dsa</h1>",
+                name3: "SnHI2",
+                n: 1
+            },
+            methods: {
+                      
+            }
+        })
+    </script>
+</body>
+</html>

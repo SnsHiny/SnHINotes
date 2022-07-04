@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+    <!--
+        - 定义：要用的属性不存在，要通过已有属性计算得来，computed表示
+        - 原理：底层借助了Object.defineproperty方法提供的getter和setter方法
+        - get函数在初次读取和依赖的数据发生改变时会被调用
+        - 与methods相比，计算属性内部有缓存机制，效率更高，调试方便
+        - 计算属性最终会出现在vm上，直接读取使用即可
+        - 如果计算属性要被修改，那必须写set函数去响应修改，且set中要引起计算时依赖的数据发生改变
+    -->
+
+    <div id="root">
+        姓：<input type="text" v-model="firstName"><br><br>
+        名：<input type="text" v-model="lastName"><br><br>
+        全名：<span>{{fullName}}</span>
+        <!-- 全名：<span>{{firstName}}-{{lastName}}</span> -->
+        <!-- 全名：<span>{{showName()}}</span> -->
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+                                   
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                firstName: "张",
+                lastName: "三"
+            },
+            // methods: {
+            //     showName() {
+            //         return this.firstName + "-" + this.lastName
+            //     }   
+            // }
+            
+            //计算属性
+            computed: {
+                fullName: {
+                    //当初次读取fullName值和所依赖的数据发生改变时，get就会被调用，且返回值就是fullName的值
+                    get() {
+                        //这里的this是vue实例
+                        return this.firstName + "-" + this.lastName
+                    },
+                    set(value) {
+                        fullName = value
+                        const arr = value.split("-")
+                        this.firstName = arr[0]
+                        this.lastName = arr[1]
+                    }
+                }
+                //计算属性简写方式（只有get的情况下）
+                // fullName() {
+                //     return this.firstName + "-" + this.lastName
+                // }
+            }
+        })
+    </script>
+</body>
+</html>

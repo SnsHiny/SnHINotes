@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+
+    <!--
+        Vue管理的函数一定不要写箭头函数，一旦写了箭头函数，this就不再是vue实例了
+    -->
+
+    <div id="root">
+        你好，{{name}}
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.devtools = false;
+
+        // //el的两种写法
+        // const v = new Vue({
+        //     //    new Vue实例的时候设定
+        //     el: '#root',
+        //     data: {
+        //         name: 'SnHI'
+        //     }
+        // })
+        // //    先创建Vue实例，随后使用v.$mount()指定el的值
+        // v.$mount('#root');
+
+        //data的两种写法
+        new Vue({
+            el: '#root',
+            // 对象式
+            // data: {
+            //     name: 'SnHI'
+            // },
+            // 函数式
+            data: function(){
+                return {
+                    name: 'SnHI'
+                }
+            }
+            // data() {
+            //     return {
+            //         name: 'SnHI'
+            //     }
+            // }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- opacity：设置元素的不透明度 -->
+        <h1 :style="{opacity}">学习Vue</h1>
+        <button @click="stop">点我停止变换</button>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+                                   
+        new Vue({
+            el: '#root',
+            data: {
+                opacity: 1
+            },
+            methods: {
+                stop() {
+                    //销毁Vue实例
+                    this.$destroy()
+                }
+            },
+            //八大生命周期
+            beforeCreate() {
+                console.log("beforeCreate")
+            },
+            created() {
+                console.log("created")
+            },
+            beforeMount() {
+                console.log("beforeMount")
+            },
+            //常用（初始化操作），Vue完成模板的解析并把初始的真实DOM元素放入页面后（挂载完毕）调用mounted
+            mounted() {
+                console.log("mounted")
+                //定时器
+                this.timer = setInterval(()=> {
+                    this.opacity -= 0.01
+                    if(this.opacity <= 0) this.opacity = 1
+                }, 16)
+            },
+            beforeUpdate() {
+                console.log("beforeUpdate")
+            },
+            updated() {
+                console.log("updated")
+            },
+            //常用（收尾操作）
+            beforeDestroy() {
+                //清除定时器
+                console.log("beforeDestroy")
+                clearInterval(this.timer)
+            },
+            destroyed() {
+                console.log("destroyed")
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+    <!--  组件
+        - 步骤
+            - 定义组件
+            - 注册组件
+            - 使用组件
+        - 定义方式
+            - 使用Vue.extend(options)创建，其中需要注意options配置项中不能有el，因为最终所有的组件都要经过一个Vue实例的管理，由Vue实例来决定服务哪个容器；data必须写成函数式，以避免组件被复用时，数据存在引用关系
+            - 简写：const school = options
+        - 注册方式
+            - 局部注册：new Vue时传入components配置项
+            - 全局变量：Vue.component('组件名', 组件)
+        - 使用方式
+            - <组件名></组件名>
+        - 使用template可以配置组件结构
+        - 组件名
+            - 单个单词首字母大小写皆可
+            - 多个单词组成时使用kebab-case命名方式或CamelCase命名方式（需要Vue脚手架支持）
+
+            - 使用name配置项指定组件在开发者工具中呈现的名字
+            - 组件尽可能回避html中已有的元素名称
+        - 组件标签
+            - <组件名></组件名>或<组件名/>（需要Vue脚手架支持）       
+    -->
+
+    <div id="root">
+        <!-- 使用组件 -->
+        <School></School>
+        <hr>
+        <Student></Student>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        // 定义组件
+        const School = Vue.extend({
+            template:
+            `
+                <div>
+                    <h2>{{school}}</h2>
+                    <h2>{{address}}</h2>        
+                </div>
+            `,
+            // el: "#root", //在组件中不要写el配置项，因为最终所有的组件都要被Vue实例所管理，由Vue实例来决定服务对象
+            data() {
+                return {
+                    school: "湖北师范大学",
+                    address: "黄石"
+                }
+            }
+        })
+        const Student = Vue.extend({
+            template:
+            `
+                <div>
+                    <h2>{{name}}</h2>
+                    <h2>{{age}}</h2>        
+                </div>
+            `,
+            data() {
+                return {
+                    name: "SnHI",
+                    age: 18
+                }
+            }
+        })
+                
+        // 全局注册组件
+        Vue.component("School", School)
+
+        new Vue({
+            el: '#root',
+            // 注册组件（局部注册）
+            components: {
+                // School,
+                Student
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+
+        <!--
+            - prevent：阻止默认事件（常用）
+            - stop：组织事件冒泡（常用）
+            - once：事件只触发一次（常用）
+            - capture：使用事件的捕获模式（父元素向子元素的传递过程）
+            - self：只有event.target是当前操作的元素时才触发事件
+            - passive：事件的默认行为立即执行，无需等待事件回调执行完毕
+            - 修饰符可以连续写，例@click.prevent.once
+        -->
+
+        <h1>学习{{name}}</h1>
+        <!-- prevent：阻止默认事件（常用） -->
+        <a :href="url" @click.prevent="showInfo1">点我触发事件但不跳转链接</a><br>
+        <!-- once：事件只触发一次（常用） -->
+        <button @click.once="showInfo2">按钮只触发一次</button>
+    </div>
+         
+    <script type="text/javascript">
+        Vue.config.devtools = false;
+                                   
+        new Vue({
+            el: '#root',
+            data: {
+                name: "事件修饰符",
+                url: "http://www.baidu.com"
+            },
+            methods: {
+                showInfo1() {
+                    alert("prevent")              
+                },
+                showInfo2() {
+                    alert("once")
+                }
+            }
+        })
+    </script>
+</body>
+</html>
